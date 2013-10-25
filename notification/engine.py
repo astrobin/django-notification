@@ -5,9 +5,14 @@ import traceback
 
 import cPickle as pickle
 
+import django
 from django.conf import settings
 from django.core.mail import mail_admins
-from django.contrib.auth.models import User
+if django.get_version() >= '1.5':
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+else:
+    from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 from notification.lockfile import FileLock, AlreadyLocked, LockTimeout
