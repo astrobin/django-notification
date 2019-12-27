@@ -31,12 +31,12 @@ class EmailBackend(backends.BaseBackend):
             "full.txt"
         ), notice_type.label, context)
 
-        subject = "".join(render_to_string("notification/email_subject.txt", {
+        subject = "".join(render_to_string("notification/email_subject.txt", context.update({
             "message": messages["short.txt"],
-        }, context).splitlines())
+        })).splitlines())
 
-        body = render_to_string("notification/email_body.txt", {
+        body = render_to_string("notification/email_body.txt", context.update({
             "message": messages["full.txt"],
-        }, context)
+        }))
 
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [recipient.email])
