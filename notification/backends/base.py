@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.template import Context
 from django.template.loader import render_to_string
 
 from django.contrib.sites.models import Site
@@ -47,8 +46,8 @@ class BaseBackend(object):
         default_http_protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
         current_site = Site.objects.get_current()
         base_url = "%s://%s" % (default_http_protocol, current_site.domain)
-        return Context({
+        return {
             "default_http_protocol": default_http_protocol,
             "current_site": current_site,
             "base_url": base_url
-        })
+        }
