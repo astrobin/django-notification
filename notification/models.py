@@ -1,5 +1,8 @@
-import cPickle as pickle
-
+import six
+if six.PY2:
+    import cPickle as pickle
+else:
+    import pickle
 import django
 from django.apps import apps
 from django.db import models
@@ -69,11 +72,11 @@ class NoticeType(models.Model):
             if updated:
                 notice_type.save()
                 if verbosity > 1:
-                    print "Updated %s NoticeType" % label
+                    print("Updated %s NoticeType" % label)
         except cls.DoesNotExist:
             cls(label=label, display=display, description=description, default=default).save()
             if verbosity > 1:
-                print "Created %s NoticeType" % label
+                print("Created %s NoticeType" % label)
 
 
 class NoticeSetting(models.Model):
